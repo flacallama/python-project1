@@ -1,23 +1,31 @@
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+import tkinter as tk
+
 
 def quit_app():
     root.quit() #built in function
 
 def show_about(event=None):
-    print("Help menu coming")
     messagebox.showwarning(
     "About",
     "Dylan made this in 2017"
 )
 
-def show_info(event=None):
-    print("Showing info in msgbox")
-    messagebox.showinfo(
-        "Title",
-        "info"
-    )
+def show_info():
+    popup = tk.Tk()
+    # widthxheight+xoffset+yoffset
+    popup.geometry("400x200+300+300")
+    popup.wm_title("Your shopping preferences")
+    thisText = textInput.get()
+    label = ttk.Label(popup, text=thisText)
+
+    label.pack(side=TOP, fill=X, pady=10)
+    B1 = ttk.Button(popup, text="OK", command=popup.destroy)
+    B1.pack(side=BOTTOM, pady=10)
+    popup.mainloop()
+
 
 root = Tk()
 # root.title("Play project")
@@ -91,8 +99,10 @@ root.config(menu=the_menu)
 # the form
 
 Label(root, text="Description").grid(row=0, column=0, sticky=W)
-Entry(root, width=50).grid(row=0, column=1)
-Button(root, text="Suit", command=show_info).grid(row=0, column=8)
+textInput = StringVar()
+textInput.set("what are you shopping for?")
+description = Entry(root, textvariable=textInput, width=50).grid(row=0, column=1)
+Button(root, text="Submit", command=show_info).grid(row=0, column=8)
 
 
 Label(root, text="Quality").grid(row=1, column=0, sticky=W)
